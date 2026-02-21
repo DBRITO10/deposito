@@ -40,43 +40,57 @@
 
         .table-container { background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
         
-        /* AJUSTES DE TABELA E REMOÇÃO DAS LINHAS VAZIAS */
-        table.dataTable { border-collapse: collapse !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+        /* AJUSTE ESTRUTURAL DA TABELA */
+        table.dataTable { border-collapse: collapse !important; width: 100% !important; margin: 0 !important; border: 1px solid #dee2e6 !important; }
         
+        /* Cabeçalho Vermelho Integrado */
         table.dataTable thead th { 
             background: var(--red) !important; 
             color: white !important; 
             text-align: center !important; 
-            padding: 12px 8px !important;
-            border: none !important; /* Remove bordas internas */
-            min-width: 100px; /* Garante que as colunas se respeitem no mobile */
+            padding: 10px 5px !important;
+            border: 1px solid var(--dark-red) !important; /* Linhas verticais no topo */
+            font-size: 13px;
+            vertical-align: middle;
+            min-width: 110px;
         }
 
-        /* Remove a seta de ordenação que quebra o layout */
-        table.dataTable thead th.sorting,
-        table.dataTable thead th.sorting_asc,
-        table.dataTable thead th.sorting_desc { background-image: none !important; }
-
-        #headerRow th { border-bottom: none !important; padding-bottom: 5px !important; }
-
-        #filterRow th {
-            background: var(--red) !important;
-            padding: 5px 10px 12px 10px !important;
-            border-top: none !important;
+        /* Título e Ícone de Ordenação na mesma linha */
+        table.dataTable thead .sorting, 
+        table.dataTable thead .sorting_asc, 
+        table.dataTable thead .sorting_desc {
+            background-position: center right 3px !important;
         }
 
-        /* Identificador de Grupo (ID) */
-        .grupo-par { background-color: #ffffff !important; }
-        .grupo-impar { background-color: #e9ecef !important; }
-
-        /* Botões de Filtro */
-        .filter-btn { width: 100%; padding: 6px; font-size: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; background: rgba(255,255,255,0.2); color: white; font-weight: bold; }
+        /* Botão de Filtro Justo ao Título */
+        .filter-btn { 
+            width: 95%; 
+            margin-top: 8px;
+            padding: 5px; 
+            font-size: 10px; 
+            border: 1px solid rgba(255,255,255,0.3); 
+            border-radius: 4px; 
+            cursor: pointer; 
+            background: rgba(0,0,0,0.15); 
+            color: white; 
+            font-weight: bold; 
+        }
         .filter-applied { background: #FFD700 !important; color: #000 !important; border: 1px solid #B8860B !important; }
 
-        table.dataTable tbody td { border: 1px solid #dee2e6 !important; text-align: center !important; padding: 10px !important; font-size: 13px; }
+        /* Corpo da Tabela com Linhas Verticais */
+        table.dataTable tbody td { 
+            border: 1px solid #dee2e6 !important; 
+            text-align: center !important; 
+            padding: 10px !important; 
+            font-size: 13px; 
+        }
+        
+        .grupo-par { background-color: #ffffff !important; }
+        .grupo-impar { background-color: #f8f9fa !important; }
+
         .pill { padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; display: inline-block; min-width: 95px; text-transform: uppercase; }
 
-        /* Modais e UI */
+        /* Modais */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: white; width: 320px; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { background: var(--red); color: white; padding: 15px; font-weight: bold; text-align: center; }
@@ -119,7 +133,7 @@
 </div>
 
 <div class="table-container">
-    <table id="tabelaExp" class="display nowrap" style="width:100%">
+    <table id="tabelaExp" class="display nowrap">
         <thead>
             <tr id="headerRow"></tr>
             <tr id="filterRow"></tr>
@@ -198,14 +212,14 @@ function inicializarPagina(dados) {
         </tr>`);
     });
 
-    // Removida a ordenação padrão (ordering: false) para evitar conflitos visuais no cabeçalho
     table = $('#tabelaExp').DataTable({ 
         paging: false, 
         info: false, 
         dom: 'rt', 
         scrollX: true, 
         destroy: true, 
-        ordering: false,
+        ordering: true,
+        orderCellsTop: true,
         autoWidth: false
     });
 
