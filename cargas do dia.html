@@ -31,8 +31,8 @@
         h1 { background: var(--red); color: white; text-align: center; padding: 15px; border-radius: 4px; margin: 0 0 20px 0; font-size: 20px; text-transform: uppercase; }
 
         .dashboard { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        #chartContainer { width: 100%; max-width: 450px; height: 320px; }
-        #totalVisual { font-size: 18px; font-weight: bold; color: var(--red); margin-top: 15px; border: 2px solid var(--red); padding: 6px 20px; border-radius: 50px; background: #fff; }
+        #chartContainer { width: 100%; max-width: 550px; height: 320px; }
+        #totalVisual { font-size: 18px; font-weight: bold; color: var(--red); margin-top: 15px; border: 2px solid var(--red); padding: 10px 25px; border-radius: 15px; background: #fff; text-align: center; }
 
         .toolbar { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; align-items: center; }
         #mainSearch { padding: 10px; border: 1px solid #ccc; border-radius: 6px; width: 220px; outline: none; }
@@ -40,57 +40,32 @@
 
         .table-container { background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
         
-        /* AJUSTE ESTRUTURAL DA TABELA */
-        table.dataTable { border-collapse: collapse !important; width: 100% !important; margin: 0 !important; border: 1px solid #dee2e6 !important; }
-        
-        /* Cabeçalho Vermelho Integrado */
+        table.dataTable { border-collapse: collapse !important; border: none !important; }
         table.dataTable thead th { 
             background: var(--red) !important; 
             color: white !important; 
             text-align: center !important; 
-            padding: 10px 5px !important;
-            border: 1px solid var(--dark-red) !important; /* Linhas verticais no topo */
-            font-size: 13px;
-            vertical-align: middle;
-            min-width: 110px;
+            padding: 12px !important;
+            border: 1px solid var(--dark-red) !important;
         }
 
-        /* Título e Ícone de Ordenação na mesma linha */
-        table.dataTable thead .sorting, 
-        table.dataTable thead .sorting_asc, 
-        table.dataTable thead .sorting_desc {
-            background-position: center right 3px !important;
+        #headerRow th { border-bottom: none !important; }
+        #filterRow th {
+            background: var(--red) !important;
+            padding: 0 10px 12px 10px !important;
+            border-top: none !important; 
+            border-bottom: 2px solid var(--dark-red) !important;
         }
 
-        /* Botão de Filtro Justo ao Título */
-        .filter-btn { 
-            width: 95%; 
-            margin-top: 8px;
-            padding: 5px; 
-            font-size: 10px; 
-            border: 1px solid rgba(255,255,255,0.3); 
-            border-radius: 4px; 
-            cursor: pointer; 
-            background: rgba(0,0,0,0.15); 
-            color: white; 
-            font-weight: bold; 
-        }
+        .grupo-par { background-color: #ffffff !important; }
+        .grupo-impar { background-color: #e9ecef !important; }
+
+        .filter-btn { width: 100%; padding: 6px; font-size: 10px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background: #f0f0f0; font-weight: bold; }
         .filter-applied { background: #FFD700 !important; color: #000 !important; border: 1px solid #B8860B !important; }
 
-        /* Corpo da Tabela com Linhas Verticais */
-        table.dataTable tbody td { 
-            border: 1px solid #dee2e6 !important; 
-            text-align: center !important; 
-            padding: 10px !important; 
-            font-size: 13px; 
-        }
-        
-        .grupo-par { background-color: #ffffff !important; }
-        .grupo-impar { background-color: #f8f9fa !important; }
-
+        table.dataTable tbody td { border: 1px solid #dee2e6 !important; text-align: center !important; padding: 10px !important; font-size: 13px; }
         .pill { padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; display: inline-block; min-width: 95px; text-transform: uppercase; }
 
-        /* Modais */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: white; width: 320px; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { background: var(--red); color: white; padding: 15px; font-weight: bold; text-align: center; }
@@ -118,7 +93,7 @@
 
 <div class="dashboard">
     <div id="chartContainer"><canvas id="statusChart"></canvas></div>
-    <div id="totalVisual">Cargas: 0</div>
+    <div id="totalVisual">Carregando indicadores...</div>
 </div>
 
 <div class="toolbar">
@@ -133,7 +108,7 @@
 </div>
 
 <div class="table-container">
-    <table id="tabelaExp" class="display nowrap">
+    <table id="tabelaExp" class="display nowrap" style="width:100%">
         <thead>
             <tr id="headerRow"></tr>
             <tr id="filterRow"></tr>
@@ -212,17 +187,7 @@ function inicializarPagina(dados) {
         </tr>`);
     });
 
-    table = $('#tabelaExp').DataTable({ 
-        paging: false, 
-        info: false, 
-        dom: 'rt', 
-        scrollX: true, 
-        destroy: true, 
-        ordering: true,
-        orderCellsTop: true,
-        autoWidth: false
-    });
-
+    table = $('#tabelaExp').DataTable({ paging: false, info: false, dom: 'rt', scrollX: true, destroy: true, orderCellsTop: true });
     $('#mainSearch').on('keyup', function() { table.search(this.value).draw(); updateDashboard(); });
     restaurarFiltrosPermanentes();
     updateDashboard();
@@ -231,18 +196,24 @@ function inicializarPagina(dados) {
 function updateDashboard() {
     const visibleRows = table.rows({ search: 'applied' }).nodes().to$();
     let idsUnicos = new Set();
-    const statsCargas = {}; 
+    let totalExpedicoes = 0;
+    const statsStatus = {}; 
 
     visibleRows.each(function() {
+        totalExpedicoes++; 
         let id = $(this).attr('data-id');
         let status = $(this).find('td:eq(7)').text().trim();
-        if (id && !idsUnicos.has(id)) {
-            idsUnicos.add(id);
-            statsCargas[status] = (statsCargas[status] || 0) + 1;
-        }
+        
+        if (id) idsUnicos.add(id);
+        if (status) statsStatus[status] = (statsStatus[status] || 0) + 1;
     });
 
-    $("#totalVisual").text("Total de Cargas: " + idsUnicos.size);
+    $("#totalVisual").html(`
+        <div style="line-height: 1.2;">
+            <div>Cargas (IDs): <strong>${idsUnicos.size}</strong></div>
+            <div style="font-size: 13px; color: #666; font-weight: normal;">Total Expedições: ${totalExpedicoes}</div>
+        </div>
+    `);
 
     colunas.forEach((_, i) => {
         const memory = localStorage.getItem(`exp_filt_${i}`);
@@ -258,10 +229,18 @@ function updateDashboard() {
     chart = new Chart(document.getElementById('statusChart'), {
         type: 'pie',
         data: {
-            labels: Object.keys(statsCargas),
-            datasets: [{ data: Object.values(statsCargas), backgroundColor: Object.keys(statsCargas).map(k => coresStatus[k] || "#ccc") }]
+            labels: Object.keys(statsStatus).map(key => `${key} (${statsStatus[key]})`),
+            datasets: [{ data: Object.values(statsStatus), backgroundColor: Object.keys(statsStatus).map(k => coresStatus[k] || "#ccc") }]
         },
-        options: { maintainAspectRatio: false }
+        options: { 
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: { boxWidth: 15, font: { size: 12, weight: 'bold' } }
+                }
+            }
+        }
     });
 }
 
@@ -320,8 +299,15 @@ function exportarPDF() {
     doc.setFontSize(16); doc.text("EXPEDIÇÃO_MÓVEIS SIMONETTI", 45, 15);
     
     let idsUnicosSet = new Set();
-    filteredRows.each(function(){ idsUnicosSet.add($(this).attr('data-id')); });
-    doc.setFontSize(10); doc.text(`TOTAL DE CARGAS: ${idsUnicosSet.size}`, 230, 15);
+    let totalLinhas = 0;
+    filteredRows.each(function(){ 
+        idsUnicosSet.add($(this).attr('data-id')); 
+        totalLinhas++;
+    });
+
+    doc.setFontSize(10); 
+    doc.text(`TOTAL DE CARGAS: ${idsUnicosSet.size}`, 230, 12);
+    doc.text(`TOTAL EXPEDIÇÕES: ${totalLinhas}`, 230, 18);
 
     const bodyData = [];
     filteredRows.each(function() {
