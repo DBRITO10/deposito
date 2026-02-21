@@ -19,72 +19,68 @@
         :root { 
             --red: #B22222; 
             --dark-red: #8B0000;
-            --user-bar-bg: #d32f2f;
+            --user-bar-bg: #d32f2f; /* Vermelho mais claro para a barra de usuário */
             --bg: #f8f9fa; 
         }
         body { background: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 10px; }
         
+        /* Barra de Usuário */
         #userBar { background: var(--user-bar-bg); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; color: white; margin-bottom: 10px; }
         .back-area { display: flex; align-items: center; gap: 15px; }
         .back-arrow { cursor: pointer; font-size: 24px; text-decoration: none; color: white; }
         
         h1 { background: var(--red); color: white; text-align: center; padding: 15px; border-radius: 4px; margin: 0 0 20px 0; font-size: 20px; text-transform: uppercase; }
 
+        /* Dashboard */
         .dashboard { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         #chartContainer { width: 100%; max-width: 450px; height: 320px; }
         #totalVisual { font-size: 18px; font-weight: bold; color: var(--red); margin-top: 15px; border: 2px solid var(--red); padding: 6px 20px; border-radius: 50px; background: #fff; }
 
+        /* Controles */
         .toolbar { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; align-items: center; }
         #mainSearch { padding: 10px; border: 1px solid #ccc; border-radius: 6px; width: 220px; outline: none; }
         .btn-share { background: #1E90FF; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
+        /* Tabela Profissional - Estilo Vermelho Simonetti */
         .table-container { background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
-        
-        /* CORREÇÃO DO ERRO VISUAL DAS LINHAS VERMELHAS */
-        table.dataTable { border-collapse: collapse !important; border: none !important; }
         
         table.dataTable thead th { 
             background: var(--red) !important; 
             color: white !important; 
+            border: 1px solid var(--dark-red) !important; 
             text-align: center !important; 
             padding: 12px !important;
-            border: 1px solid var(--dark-red) !important;
         }
 
-        /* Remove a borda de baixo da primeira linha de títulos */
-        #headerRow th { border-bottom: none !important; }
-
-        /* Remove a borda de cima da linha de botões de filtro e ajusta o padding para "colar" */
-        #filterRow th {
+        /* Linha de Filtros colada no título */
+        table.dataTable thead tr#filterRow th {
             background: var(--red) !important;
-            padding: 0 10px 12px 10px !important;
-            border-top: none !important; 
-            border-bottom: 2px solid var(--dark-red) !important;
+            border-top: none !important;
+            padding: 0 10px 10px 10px !important;
         }
 
-        /* Identificador de Grupo (ID) */
+        /* Agrupamento Visual (Zebrado por Carga) */
         .grupo-par { background-color: #ffffff !important; }
-        .grupo-impar { background-color: #e9ecef !important; }
+        .grupo-impar { background-color: #f2f2f2 !important; } /* Cinza claro para identificar o grupo de carga */
 
-        /* Botões de Filtro */
         .filter-btn { width: 100%; padding: 6px; font-size: 10px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background: #f0f0f0; font-weight: bold; }
-        .filter-applied { background: #FFD700 !important; color: #000 !important; border: 1px solid #B8860B !important; }
+        .filter-applied { background: #FFD700 !important; color: #000 !important; }
 
-        table.dataTable tbody td { border: 1px solid #dee2e6 !important; text-align: center !important; padding: 10px !important; font-size: 13px; }
+        table.dataTable tbody td { border: 1px solid #eee !important; text-align: center !important; padding: 10px !important; font-size: 13px; }
         .pill { padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; display: inline-block; min-width: 95px; text-transform: uppercase; }
 
-        /* Modais e UI */
+        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: white; width: 320px; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { background: var(--red); color: white; padding: 15px; font-weight: bold; text-align: center; }
         .modal-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 15px; background: #f1f1f1; }
-        .modal-footer button { padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .modal-footer button { padding: 10px; border-radius: 5px; cursor: pointer; }
         .btn-aplicar { background: var(--red); color: white; border: none; }
         
         .dropdown { position: relative; }
         .dropdown-content { display: none; position: absolute; right: 0; background: white; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 100; border-radius: 6px; min-width: 180px; }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content button { width: 100%; padding: 12px; border: none; background: none; text-align: left; cursor: pointer; border-bottom: 1px solid #f0f0f0; font-weight: bold; }
+        .dropdown-content button { width: 100%; padding: 12px; border: none; background: none; text-align: left; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     </style>
 </head>
 <body>
@@ -97,7 +93,7 @@
     <button onclick="fazerLogoff()" style="background:transparent; color:white; border:1px solid #fff; padding:6px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">SAIR</button>
 </div>
 
-<h1>EXPEDIÇÃO_MÓVEIS SIMONETTI</h1>
+<h1>Painel de Expedição Simonetti</h1>
 
 <div class="dashboard">
     <div id="chartContainer"><canvas id="statusChart"></canvas></div>
@@ -109,7 +105,7 @@
     <div class="dropdown">
         <button class="btn-share">EXPORTAR / COMPARTILHAR</button>
         <div class="dropdown-content">
-            <button onclick="exportarPDF()">📄 PDF Profissional (MS)</button>
+            <button onclick="exportarPDF()">📄 PDF Administrativo</button>
             <button onclick="exportarExcel()">📊 Planilha Excel</button>
         </div>
     </div>
@@ -142,8 +138,8 @@
 const csvUrl = "https://docs.google.com/spreadsheets/d/1-t9-DE1erEwcgZWVHMHq5JWBqWYAnZvh-_01__3fHno/export?format=csv&gid=0";
 const colunas = ["DATA", "EXPEDIÇÃO", "CARREGAMENTO", "PLACA", "CENTRAL", "DESTINO", "BOX", "STATUS", "VEICULO"];
 
-const coresStatus = { "EM SEPARAÇÃO": "#FF8C00", "CONFERIDO": "#0055b3", "FINALIZADO": "#0b6631", "CANCELADA": "#b30000" };
-const coresVeic = { "CARRETA": "#006633", "TRUCK": "#4682B4", "PEQUENO": "#6A5ACD", "TOCO": "#8B4513" };
+const coresStatus = { "EM SEPARAÇÃO": "#ffeba1", "CONFERIDO": "#0055b3", "FINALIZADO": "#0b6631", "CANCELADA": "#b30000" };
+const coresVeic = { "CARRETA": "#006633", "TRUCK": "#d4edbc", "PEQUENO": "#cce5ff", "TOCO": "#fff3cd" };
 
 let table, chart, curIdx;
 
@@ -156,6 +152,12 @@ $(document).ready(function() {
         complete: function(res) { inicializarPagina(res.data); }
     });
 });
+
+function fazerLogoff() {
+    localStorage.removeItem("username");
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "login.html";
+}
 
 function inicializarPagina(dados) {
     const h = $("#headerRow").empty();
@@ -173,10 +175,11 @@ function inicializarPagina(dados) {
     dados.forEach(r => {
         let st = (r.STATUS || "").toUpperCase().trim();
         let vc = (r.VEICULO || "").toUpperCase().trim();
-        let idAtual = r.ID || "S/ID";
+        let idAtual = r.ID || "S/ID"; // Captura o ID da planilha
 
         if(!st && !r.DATA) return;
 
+        // Lógica de Alternância de Cor por ID (Agrupamento de carga)
         if (idAtual !== ultimoID) {
             classeCor = (classeCor === "grupo-par") ? "grupo-impar" : "grupo-par";
             ultimoID = idAtual;
@@ -190,12 +193,15 @@ function inicializarPagina(dados) {
             <td>${r.CENTRAL || ""}</td>
             <td>${r.DESTINO || ""}</td>
             <td>${r.BOX || ""}</td>
-            <td><span class="pill" style="background:${coresStatus[st] || '#ccc'}; color:#fff">${st}</span></td>
-            <td><span class="pill" style="background:${coresVeic[vc] || '#eee'}; color:#fff; border:1px solid #ccc">${vc}</span></td>
+            <td><span class="pill" style="background:${coresStatus[st] || '#ccc'}; color:${st === 'EM SEPARAÇÃO' ? '#000':'#fff'}">${st}</span></td>
+            <td><span class="pill" style="background:${coresVeic[vc] || '#eee'}; color:#000; border:1px solid #ccc">${vc}</span></td>
         </tr>`);
     });
 
-    table = $('#tabelaExp').DataTable({ paging: false, info: false, dom: 'rt', scrollX: true, destroy: true, orderCellsTop: true });
+    table = $('#tabelaExp').DataTable({ 
+        paging: false, info: false, dom: 'rt', scrollX: true, destroy: true, orderCellsTop: true 
+    });
+
     $('#mainSearch').on('keyup', function() { table.search(this.value).draw(); updateDashboard(); });
     restaurarFiltrosPermanentes();
     updateDashboard();
@@ -203,12 +209,15 @@ function inicializarPagina(dados) {
 
 function updateDashboard() {
     const visibleRows = table.rows({ search: 'applied' }).nodes().to$();
+    
     let idsUnicos = new Set();
     const statsCargas = {}; 
 
     visibleRows.each(function() {
         let id = $(this).attr('data-id');
         let status = $(this).find('td:eq(7)').text().trim();
+        
+        // Só conta como uma carga se o ID ainda não foi visto nessa filtragem
         if (id && !idsUnicos.has(id)) {
             idsUnicos.add(id);
             statsCargas[status] = (statsCargas[status] || 0) + 1;
@@ -218,13 +227,10 @@ function updateDashboard() {
     $("#totalVisual").text("Total de Cargas: " + idsUnicos.size);
 
     colunas.forEach((_, i) => {
-        const memory = localStorage.getItem(`exp_filt_${i}`);
+        const isFiltered = table.column(i).search();
         const btn = $(`#fbtn-${i}`);
-        if (memory && JSON.parse(memory).length > 0) {
-            btn.addClass("filter-applied").text("APLICADO");
-        } else {
-            btn.removeClass("filter-applied").text("FILTRAR");
-        }
+        if(isFiltered) { btn.addClass("filter-applied").text("APLICADO"); }
+        else { btn.removeClass("filter-applied").text("FILTRAR"); }
     });
 
     if(chart) chart.destroy();
@@ -234,8 +240,39 @@ function updateDashboard() {
             labels: Object.keys(statsCargas),
             datasets: [{ data: Object.values(statsCargas), backgroundColor: Object.keys(statsCargas).map(k => coresStatus[k] || "#ccc") }]
         },
-        options: { maintainAspectRatio: false }
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(it) {
+                            let total = it.dataset.data.reduce((a, b) => a + b, 0);
+                            let p = ((it.raw / total) * 100).toFixed(1);
+                            return `${it.label}: ${it.raw} Cargas (${p}%)`;
+                        }
+                    }
+                }
+            }
+        }
     });
+}
+
+// --- Funções de Filtro (Mantidas conforme original) ---
+function openModal(idx, title) {
+    curIdx = idx;
+    $("#modalTitle").text(title);
+    const unique = table.column(idx).data().unique().sort().toArray().map(v => $(`<span>${v}</span>`).text().trim());
+    const list = $("#listCheckboxes").empty();
+    const salvos = JSON.parse(localStorage.getItem(`exp_filt_${idx}`)) || unique;
+
+    unique.forEach(v => {
+        if(!v) return;
+        let checked = salvos.includes(v) ? "checked" : "";
+        list.append(`<label style="display:block; padding:8px; border-bottom:1px solid #eee; cursor:pointer;">
+            <input type="checkbox" value="${v}" ${checked}> ${v}
+        </label>`);
+    });
+    $("#modalFiltro").css("display", "flex");
 }
 
 function aplicarFiltro() {
@@ -257,7 +294,7 @@ function limparFiltroColuna() {
 function restaurarFiltrosPermanentes() {
     colunas.forEach((_, i) => {
         const memory = JSON.parse(localStorage.getItem(`exp_filt_${i}`));
-        if(memory && memory.length > 0) {
+        if(memory) {
             const regex = memory.map(v => '^' + $.fn.dataTable.util.escapeRegex(v) + '$').join('|');
             table.column(i).search(regex, true, false);
         }
@@ -265,56 +302,32 @@ function restaurarFiltrosPermanentes() {
     table.draw();
 }
 
-function openModal(idx, title) {
-    curIdx = idx;
-    $("#modalTitle").text(title);
-    const unique = table.column(idx).data().unique().sort().toArray().map(v => $(`<span>${v}</span>`).text().trim());
-    const list = $("#listCheckboxes").empty();
-    const salvos = JSON.parse(localStorage.getItem(`exp_filt_${idx}`)) || unique;
-
-    unique.forEach(v => {
-        if(!v) return;
-        let checked = salvos.includes(v) ? "checked" : "";
-        list.append(`<label style="display:block; padding:8px; border-bottom:1px solid #eee; cursor:pointer;">
-            <input type="checkbox" value="${v}" ${checked}> ${v}
-        </label>`);
-    });
-    $("#modalFiltro").css("display", "flex");
-}
-
+// --- Funções de Exportação (Aprimoradas) ---
 function exportarPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('l', 'mm', 'a4');
-    const filteredRows = table.rows({ search: 'applied' }).nodes().to$();
-    
-    doc.setFillColor(178, 34, 34); doc.rect(0, 0, 297, 25, 'F');
-    doc.setTextColor(255, 255, 255); doc.setFontSize(28); doc.setFont("helvetica", "bold");
-    doc.text("MS", 15, 17);
-    doc.setFontSize(16); doc.text("EXPEDIÇÃO_MÓVEIS SIMONETTI", 45, 15);
-    
-    let idsUnicosSet = new Set();
-    filteredRows.each(function(){ idsUnicosSet.add($(this).attr('data-id')); });
-    doc.setFontSize(10); doc.text(`TOTAL DE CARGAS: ${idsUnicosSet.size}`, 230, 15);
+    const filteredRows = table.rows({ search: 'applied' }).data().toArray();
 
-    const bodyData = [];
-    filteredRows.each(function() {
-        const row = []; $(this).find('td').each(function() { row.push($(this).text().trim()); });
-        bodyData.push(row);
-    });
+    doc.setFillColor(178, 34, 34); 
+    doc.rect(0, 0, 297, 22, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.text("RELATÓRIO DE EXPEDIÇÃO - MÓVEIS SIMONETTI", 15, 14);
 
     doc.autoTable({
-        startY: 35, head: [colunas], body: bodyData,
-        styles: { fontSize: 8, halign: 'center', cellPadding: 3 },
+        startY: 30,
+        head: [colunas],
+        body: filteredRows.map(row => row.map((c, i) => (i === 7 || i === 8) ? $(c).text() : c)),
+        styles: { fontSize: 7, halign: 'center' },
         headStyles: { fillColor: [178, 34, 34] },
         didParseCell: function(data) {
-            if(data.section === 'body' && (data.column.index === 7 || data.column.index === 8)) {
+            if(data.section === 'body' && data.column.index === 7) { 
                 const s = data.cell.raw.toUpperCase();
-                const cor = data.column.index === 7 ? coresStatus[s] : coresVeic[s];
-                if(cor) { data.cell.styles.textColor = hexToRgb(cor); data.cell.styles.fontStyle = 'bold'; }
+                if(coresStatus[s]) data.cell.styles.fillColor = hexToRgb(coresStatus[s]);
             }
         }
     });
-    doc.save("Relatorio_Expedicao_MS.pdf");
+    doc.save("Expedicao_Simonetti.pdf");
 }
 
 function hexToRgb(hex) {
@@ -328,7 +341,6 @@ function exportarExcel() {
 }
 
 function toggleChecks(b) { $("#listCheckboxes input").prop("checked", b); }
-function fazerLogoff() { localStorage.clear(); window.location.href = "login.html"; }
 </script>
 </body>
 </html>
